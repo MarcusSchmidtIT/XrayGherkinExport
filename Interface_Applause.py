@@ -1,7 +1,8 @@
+import Config
 import requests
 import json
 
-apikey = "9ff63e15-cc56-45eb-afaf-43f4d31f7c5a9c2943"
+apikey = Config.config["Applause Platform"]["apikey"]
 
 def Applause_TestCase_Create(productID, TestCaseName, TestCaseDescription):
     url = "https://api.applause.com/v2/test-cases"

@@ -1,9 +1,10 @@
+import Config
 import requests
 import json
 import Interface_XrayCloud
 import Interface_Applause
 
-apikey = "9ff63e15-cc56-45eb-afaf-43f4d31f7c5a9c2943"
+apikey = Config.config["Applause Platform"]["apikey"]
 
 def parseGherkinToArray(parsedata):
     parsedata = parsedata.content.decode("latin1")
@@ -12,12 +13,12 @@ def parseGherkinToArray(parsedata):
 
 
 # API-URL festlegen
-baseurl = "https://xray.cloud.getxray.app/api/v1"
+baseurl = Config.config["Xray Cloud"]["URL"]
 
 # Daten für den Body der Anfrage
 data = {
-    "client_id": "1414FB6F9D1C43DEA9170901F3725F29", # client ID von Xray Cloud
-    "client_secret": "3f8b84e0ad6e6b80f9a7f1982da8cb27ed25b286fc140e86369f6f44df4254fc" # client Secret von Xray Cloud
+    "client_id": Config.config["Xray Cloud"]["Client_ID"], # client ID von Xray Cloud
+    "client_secret": Config.config["Xray Cloud"]["Client_Secret"] # client Secret von Xray Cloud
 }
 
 XrayToken = Interface_XrayCloud.getXrayToken(baseurl, data)

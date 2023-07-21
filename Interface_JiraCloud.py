@@ -1,11 +1,12 @@
+import Config
 import requests
 import json
 
-JiraApiKey = "bWFyY3VzQHNjaG1pZHQtaXQuc2VydmljZXM6QVRBVFQzeEZmR0YwX3JkdlBYVW1UMXpJRTA3NlBLejF1d2hZMDVTR0RYcnBab0IzcDJtSWkzNTFpc3VIbmppZkN4S25JODNSTDY5VVZ4RUFLQk1pTUFweHQ3NGFXMEY3elRWQVlnWm1qVm1LREVKeDlFcDNOSTRmYXFpcjUzVnkxeVhiYVBnQjZXWjBRSFpJaWt6aHFJUjNpdk5hZnhiZ0tJRENYRTV2Zmc4RklkaEpETDBuV3c0PUNEM0JBRDIw"
-IssueType_TestPlan = 10058
-IssueType_TestExecution = 10059
-Jira_ProjectID = 10005
-Jira_UserID = "5f959c90632c62007127fafe"
+JiraApiKey = Config.config["Jira Cloud"]["apikey"]
+IssueType_TestPlan = Config.config["Jira Cloud"]["IssueType_TestPlan"]
+IssueType_TestExecution = Config.config["Jira Cloud"]["IssueType_TestExecution"]
+Jira_ProjectID = Config.config["Jira Cloud"]["Jira_ProjectID"]
+Jira_UserID = Config.config["Jira Cloud"]["Jira_UserID"]
 
 
 def createTestPlan(Summary,baseurl,ApplauseCycleID):
