@@ -23,7 +23,7 @@ data = {
 
 XrayToken = Interface_XrayCloud.getXrayToken(baseurl, data)
 print(XrayToken)
-TestCaseKey="APPLAUSETC-58"
+TestCaseKey="APPLAUSETC-67"
 XrayTestCaseData = Interface_XrayCloud.getGherkinTestCase(baseurl,TestCaseKey,XrayToken)
 test_instructions = parseGherkinToArray(XrayTestCaseData)
 
