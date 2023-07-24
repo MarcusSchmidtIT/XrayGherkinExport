@@ -53,3 +53,25 @@ def Applause_GetCycleInformation(ApplauseCycleID):
     CycleInformation = CycleInformation.json()
     CycleName = CycleInformation["name"]
     return CycleName    
+
+def Applause_GetTestCaseResults(ApplauseCycleID):
+    url = "https://api.applause.com/v2/test-case-results?testCycleId="+str(ApplauseCycleID)
+    headers = {
+        "Content-Type": "application/json",
+        "Accept": "*/*",
+        "X-Api-Key": apikey
+    }
+    CycleTestResults = requests.get(url,headers=headers)
+    CycleTestResults = CycleTestResults.json()
+    return CycleTestResults
+
+def Applause_GetTestCaseInformation(TestCaseID):
+    url = "https://api.applause.com/v2/test-cases/"+str(TestCaseID)
+    headers = {
+        "Content-Type": "application/json",
+        "Accept": "*/*",
+        "X-Api-Key": apikey
+    }    
+    TestCaseInformation = requests.get(url,headers=headers)
+    TestCaseInformation = TestCaseInformation.json()
+    return TestCaseInformation

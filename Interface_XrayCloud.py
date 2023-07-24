@@ -14,7 +14,7 @@ def getXrayToken(url, data):
         print("Fehler bei der Anfrage:", response.status_code)
 
 def getGherkinTestCase(baseurl,testcasekey,XrayToken):
-    url = baseurl + "/api/v1//export/cucumber?keys="+testcasekey
+    url = baseurl + "/api/v1/export/cucumber?keys="+testcasekey
     headers = {
         "Content-Type": "application/json",
         "Accept": "application/json",
@@ -27,3 +27,11 @@ def getGherkinTestCase(baseurl,testcasekey,XrayToken):
     else:
         print("Fehler bei der Anfrage:", response.status_code) 
 
+def importTestExecution(baseurl,XrayToken,data):
+    url = baseurl + "/api/v1/import/execution"
+    headers = {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": "Bearer "+str(XrayToken),
+        "Accept-Charset": "UTF-8"
+    }
