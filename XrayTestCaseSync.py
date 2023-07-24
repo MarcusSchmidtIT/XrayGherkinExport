@@ -25,6 +25,7 @@ XrayToken = Interface_XrayCloud.getXrayToken(baseurl, data)
 print(XrayToken)
 TestCaseKey="APPLAUSETC-67"
 XrayTestCaseData = Interface_XrayCloud.getGherkinTestCase(baseurl,TestCaseKey,XrayToken)
+
 test_instructions = parseGherkinToArray(XrayTestCaseData)
 
 testcases_import = {}
@@ -57,6 +58,7 @@ for i in test_instructions:
             testcases_import['Step '+str(TestCasesCount-1)][1] = testcases_import['Step '+str(TestCasesCount-1)][1] + " " + i.strip()
     PreviousContent=i.strip()
 
+print(testcases_import)
 for index, (key, value) in enumerate(testcases_import.items()):
     Interface_Applause.Applause_TestCase_AddStep(TestCaseID,value[0],value[1],index+1)
     
