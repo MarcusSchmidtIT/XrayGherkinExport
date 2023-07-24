@@ -1,6 +1,6 @@
 import Config
 import requests
-
+import json
 
 
 def getXrayToken(url, data):
@@ -28,6 +28,7 @@ def getGherkinTestCase(baseurl,testcasekey,XrayToken):
         print("Fehler bei der Anfrage:", response.status_code) 
 
 def importTestExecution(baseurl,XrayToken,data):
+    data = json.dumps(data)
     url = baseurl + "/api/v1/import/execution"
     headers = {
         "Content-Type": "application/json",
@@ -35,3 +36,6 @@ def importTestExecution(baseurl,XrayToken,data):
         "Authorization": "Bearer "+str(XrayToken),
         "Accept-Charset": "UTF-8"
     }
+    response = requests.post(url, data=data, headers=headers)
+    print(response.text)
+
