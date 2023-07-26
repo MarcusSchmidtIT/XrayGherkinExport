@@ -22,5 +22,41 @@ data = {
 XrayToken = Interface_XrayCloud.getXrayToken(baseurl, data)
 TestPlanKey = Interface_JiraCloud.createTestPlan(ApplauseCycleName,Jira_Cloud_URL,ApplauseCycleID)
 TestPlanKey = TestPlanKey.json()
+print(TestPlanKey)
 TestPlanKey = TestPlanKey["key"]
 print(TestPlanKey)
+
+CycleTestResults = Interface_Applause.Applause_GetTestCaseResults(ApplauseCycleID)
+TestResults = CycleTestResults["content"]
+for i in CycleTestResults["content"]:
+    bolCreateTestExecution = False
+    if "PASSED" in (i["status"]):
+        bolCreateTestExecution = True
+        print(i)
+    elif "FAILED" in (i["status"]):
+        bolCreateTestExecution = True
+        print(i)
+    if bolCreateTestExecution:
+        TestCaseInformation = Interface_Applause.Applause_GetTestCaseInformation(i["testCaseId"])
+        TestCaseKey = TestCaseInformation["description"]
+
+        TestCaseKey = TestCaseKey.split("#BTS-ID")[1]
+        TestCaseKey = TestCaseKey.split("#")[0]
+        TestCaseKey = TestCaseKey.split("-")[1]
+
+        requestdata =  {
+                    "info": {
+                        "project": Config.config["Jira Cloud"]["Jira_ProjectName"],
+                        "summary": "Applause Test Result ID "+str(i["id"]),
+                        "description": "This execution was automatically created importing execution results from the Applause Platform",
+                        "testplanKey": TestPlanKey,
+                        "tests": {
+                            "testKey": Config.config["Jira Cloud"]["Jira_ProjectName"]+"-"+TestCaseKey,
+                            "status": i["status"]
+                        }
+                    }
+        }
+        print(json.dumps(requestdata))
+        Interface_XrayCloud.importTestExecution(baseurl,XrayToken,requestdata)
+
+

@@ -21,7 +21,8 @@ def Applause_TestCase_Create(productID, TestCaseName, TestCaseDescription):
         "X-Api-Key": apikey
     }
     response = requests.post(url, data=json_body, headers=headers)
-    print(response.status_code)
+    if response.status_code == 401:
+        print("Fehler bei der Anfrage:", response.text)
     return response.text
 
 def Applause_TestCase_AddStep(TestCaseID,Action,Expected,StepNr):
@@ -38,7 +39,8 @@ def Applause_TestCase_AddStep(TestCaseID,Action,Expected,StepNr):
         "X-Api-Key": apikey
     }
     response = requests.post(url, data=json_body, headers=headers)
-    print(response.status_code)
+    if response.status_code == 401:
+        print("Fehler bei der Anfrage:", response.text)
 
 def Applause_GetCycleInformation(ApplauseCycleID):
     url = "https://api.applause.com/v2/test-cycles/"+str(ApplauseCycleID)
@@ -51,3 +53,25 @@ def Applause_GetCycleInformation(ApplauseCycleID):
     CycleInformation = CycleInformation.json()
     CycleName = CycleInformation["name"]
     return CycleName    
+
+def Applause_GetTestCaseResults(ApplauseCycleID):
+    url = "https://api.applause.com/v2/test-case-results?testCycleId="+str(ApplauseCycleID)
+    headers = {
+        "Content-Type": "application/json",
+        "Accept": "*/*",
+        "X-Api-Key": apikey
+    }
+    CycleTestResults = requests.get(url,headers=headers)
+    CycleTestResults = CycleTestResults.json()
+    return CycleTestResults
+
+def Applause_GetTestCaseInformation(TestCaseID):
+    url = "https://api.applause.com/v2/test-cases/"+str(TestCaseID)
+    headers = {
+        "Content-Type": "application/json",
+        "Accept": "*/*",
+        "X-Api-Key": apikey
+    }    
+    TestCaseInformation = requests.get(url,headers=headers)
+    TestCaseInformation = TestCaseInformation.json()
+    return TestCaseInformation
